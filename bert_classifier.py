@@ -74,22 +74,22 @@ class BertForSequenceClassification(nn.Module):
 
     def configure_optimizers(self, epoch=0, lr=LR):
         """ Initialize parameters for optimizer """
-        # parameters = [
-        #     {'params': self.classifier.parameters(), 'lr': 2e-4, 'weight_decay': 1e-5}
-        # ]
-        # if epoch:
-        #    parameters.append({'params': self.bert.parameters(), 'lr': lr})
-        # else:
-        #     self.freeze_encoder()
-        #     print(f'First epoch, freezing encoder\nTrainable parameters: {self.n_trainable()}')
-        parameters = {'params': self.parameters(), 'lr': LR, 'weight_decay': 0}
-        optimizer = Adam(**parameters)
+        parameters = [
+            {'params': self.classifier.parameters(), 'lr': 2e-4, 'weight_decay': 1e-5}
+        ]
+        if epoch:
+           parameters.append({'params': self.bert.parameters(), 'lr': lr})
+        else:
+            self.freeze_encoder()
+            print(f'First epoch, freezing encoder\nTrainable parameters: {self.n_trainable()}')
+        # parameters = {'params': self.parameters(), 'lr': LR, 'weight_decay': 0}
+        optimizer = RAdam(parameters)
         return optimizer
 
     def configure_scheduler(self, optimizer):
         """ Initialize cyclic scheduler for lr modification """
         return OneCycleLRWithWarmup(optimizer, num_steps=NUM_EPOCHS, lr_range=LR_RANGE, warmup_steps=2,
-                                    momentum_range=(0.85, 0.9))
+                                    momentum_range=(0.85, 0.95))
 
 
 def make_classifier():
