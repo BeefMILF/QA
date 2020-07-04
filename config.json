@@ -1,0 +1,22 @@
+{
+ "data_path": "./data",
+ "train": "./data/train.jsonl",
+ "test": "./data/dev.jsonl",
+ "data_clean_flag": true,
+ "seed": 3,
+ "max_q_len": null,
+ "max_p_len": null,
+ "max_seq_len": 512,
+ "pretrained_model_name": "google/bert_uncased_L-4_H-256_A-4",
+ "batch_size": 8,
+ "train_sampler_mode": "balanced",
+ "num_labels": 2,
+ "lr": 5e-05,
+ "lr_range": [
+  1e-05,
+  2e-06
+ ],
+ "grad_accum_steps": 4,
+ "num_epochs": 8,
+ "logdir": "logs/google/bert_uncased_L-4_H-256_A-4"
+}
