@@ -4,12 +4,13 @@ import torch
 from torch import nn
 from torch.optim import Adam
 from transformers import AutoConfig, AutoModel
+from transformers import get_linear_schedule_with_warmup
 from catalyst.contrib.nn.optimizers import RAdam
 from catalyst.contrib.nn import OneCycleLRWithWarmup
 
 from catalyst.utils import set_global_seed, prepare_cudnn
 
-from settings import SEED, PRETRAINED_MODEL_NAME, NUM_LABELS, LR, LR_RANGE, NUM_EPOCHS
+from settings import SEED, PRETRAINED_MODEL_NAME, NUM_LABELS, LR, LR_RANGE, NUM_EPOCHS, WARMUP_STEPS
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -27,7 +28,7 @@ class BertForSequenceClassification(nn.Module):
         config = AutoConfig.from_pretrained(model_name, num_labels=num_cls)
         self.bert = AutoModel.from_pretrained(model_name, config=config)
         self.classifier = nn.Linear(config.hidden_size, num_cls)
-        self.init_weights(self.classifier)
+        # self.init_weights(self.classifier)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self._frozen = False
 
@@ -74,22 +75,22 @@ class BertForSequenceClassification(nn.Module):
 
     def configure_optimizers(self, epoch=0, lr=LR):
         """ Initialize parameters for optimizer """
-        parameters = [
-            {'params': self.classifier.parameters(), 'lr': 2e-4, 'weight_decay': 1e-5}
-        ]
-        if epoch:
-           parameters.append({'params': self.bert.parameters(), 'lr': lr})
-        else:
-            self.freeze_encoder()
-            print(f'First epoch, freezing encoder\nTrainable parameters: {self.n_trainable()}')
-        # parameters = {'params': self.parameters(), 'lr': LR, 'weight_decay': 0}
-        optimizer = RAdam(parameters)
+        # parameters = [
+        #     {'params': self.classifier.parameters(), 'lr': 2e-4, 'weight_decay': 1e-5}
+        # ]
+        # if epoch:
+        #    parameters.append({'params': self.bert.parameters(), 'lr': lr})
+        # else:
+        #     self.freeze_encoder()
+        #     print(f'First epoch, freezing encoder\nTrainable parameters: {self.n_trainable()}')
+        parameters = {'params': self.parameters(), 'lr': LR, 'weight_decay': 0}
+        optimizer = RAdam(**parameters)
         return optimizer
 
     def configure_scheduler(self, optimizer):
         """ Initialize cyclic scheduler for lr modification """
-        return OneCycleLRWithWarmup(optimizer, num_steps=NUM_EPOCHS, lr_range=LR_RANGE, warmup_steps=2,
-                                    momentum_range=(0.85, 0.95))
+        return OneCycleLRWithWarmup(optimizer, num_steps=NUM_EPOCHS, lr_range=LR_RANGE, warmup_steps=WARMUP_STEPS,
+                                    momentum_range=(0.9, 0.92))
 
 
 def make_classifier():

@@ -23,7 +23,12 @@ class BERTTextEncoder(TextEncoder):
     def __init__(self, pretrained_model=PRETRAINED_MODEL_NAME) -> None:
         self.enforce_reversible = False
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
-        self.itos = self.tokenizer.ids_to_tokens
+
+        if hasattr(self.tokenizer, 'ids_to_tokens'):
+            self.itos = self.tokenizer.ids_to_tokens
+            self.size = len(self.itos)
+        else:
+            self.size = self.tokenizer.vocab_size
 
     @property
     def unk_index(self) -> int:
@@ -59,7 +64,7 @@ class BERTTextEncoder(TextEncoder):
         Returns:
             int: Number of tokens in the dictionary.
         """
-        return len(self.itos)
+        return self.size
 
     def encode(self, sequence: str) -> torch.Tensor:
         """ Encodes a 'sequence'.

@@ -13,18 +13,27 @@ class BQDataset(Dataset):
     def __init__(self, data):
         super().__init__()
 
-        self.input_ids, self.attention_mask, self.token_type_ids, self.targets = [torch.tensor(i).long() for i in data]
+        if len(data) == 3:
+            self.input_ids, self.attention_mask, self.targets = [torch.tensor(i).long() for i in data]
+            self._item = lambda idx: {
+                'input_ids': self.input_ids[idx],
+                'attention_mask': self.attention_mask[idx],
+                'targets': self.targets[idx]
+            }
+        else:
+            self.input_ids, self.attention_mask, self.token_type_ids, self.targets = [torch.tensor(i).long() for i in data]
+            self._item = lambda idx: {
+                'input_ids': self.input_ids[idx],
+                'attention_mask': self.attention_mask[idx],
+                'token_type_ids': self.token_type_ids[idx],
+                'targets': self.targets[idx]
+            }
 
     def __len__(self):
         return len(self.targets)
 
     def __getitem__(self, idx):
-        return {
-            'input_ids': self.input_ids[idx],
-            'attention_mask': self.attention_mask[idx],
-            'token_type_ids': self.token_type_ids[idx],
-            'targets': self.targets[idx]
-        }
+        return self._item(idx)
 
 
 samplers = {

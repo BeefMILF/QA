@@ -31,12 +31,16 @@ def make_data():
     # Pretrained tokenizer
     tokenizer = BERTTextEncoder()
 
-    # String for printing data params
-    string_log = '{n[0]} params size,  input ids: {n[1]}, attention masks: {n[2]}, token_type ids: {n[3]}, answers(targets): {n[4]}'
-
     # Encoding data
     train_features = make_dataset(df_train, tokenizer, tokenizer_kwargs)
     dev_features = make_dataset(df_dev, tokenizer, tokenizer_kwargs)
+
+    # String for printing data params
+    string_log = '{n[0]} params size,  input ids: {n[1]}, attention masks: {n[2]}, token_type ids: {n[3]}, answers(targets): {n[4]}'
+
+    if len(train_features) == 3: # no argument - token_type_ids(almost all models except for base bert)
+        string_log = '{n[0]} params size,  input ids: {n[1]}, attention masks: {n[2]}, token_type ids: None, answers(targets): {n[3]}'
+
     print(string_log.format(n=['Train'] + [i.shape for i in train_features]))
     print(string_log.format(n=['Dev'] + [i.shape for i in dev_features]))
 
@@ -57,10 +61,15 @@ def make_loaders():
     global kwargs
 
     train_features, val_features, test_features, kwargs = make_data()
+
+    # we cache labels for using them while scoring predictions after training
+    kwargs['test'] = {'y_preds': test_features[-1].copy()}
+    kwargs['valid'] = {'y_preds': val_features[-1].copy()}
+
     loaders = {
         'train': make_dataloader(train_features, mode='train'),
         'valid': make_dataloader(val_features, mode='val'),
-        'test': make_dataloader(val_features, mode='test')
+        'test': make_dataloader(test_features, mode='test')
     }
     for k, v in loaders.items():
         print(f'{k} loader size: {len(v)}')
@@ -71,6 +80,17 @@ def make_loaders():
 def make_runner(model_kwargs):
     runner = dl_runner.make_runner()
     runner.train(**model_kwargs)
+    return runner
+
+
+def score_model(runner, model, dataloader):
+    global kwargs
+
+    scores = {}
+    for k, v in dataloader.items():
+        score = dl_runner.make_predictions(runner, model, {k: v}, kwargs[k]['y_preds'])
+        scores[k] = score
+    return scores
 
 
 def run_model():
@@ -102,6 +122,13 @@ def run_model():
     model_kwargs = {**model_kwargs, **additional_kwargs}
 
     runner = make_runner(model_kwargs)
+
+    scores = score_model(runner,
+                         model_kwargs['model'],
+                         {k: v for k, v in loaders.items() if k != 'train'})
+
+    for k, v in scores.items():
+        print(f'{k} loader. accuracy: {v["acc"]:.3f}, class 1: {v["acc1"]:.3f}, class 2: {v["acc2"]:.3f}, F1 score {v["f1"]:.3f}')
 
 
 if __name__ == '__main__':

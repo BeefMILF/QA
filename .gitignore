@@ -1,4 +1,8 @@
 **/*full.pth
 **/*last.pth
+**/*.pth
 
 __pycache__
+**/*__pycache__
+
+DrQA/.vector_cache/

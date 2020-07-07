@@ -1,0 +1,25 @@
+[2020-07-05 14:30:54,076] 
+1/8 * Epoch 1 (_base): lr=1.400e-05 | momentum=0.9000
+1/8 * Epoch 1 (train): accuracy01=0.6102 | f1_score=0.6895 | loss=0.6693 | lr=1.400e-05 | momentum=0.9000
+1/8 * Epoch 1 (valid): accuracy01=0.6464 | f1_score=0.7225 | loss=0.6351
+1/8 * Epoch 1 (test): accuracy01=0.6697 | f1_score=0.7490 | loss=0.6148
+[2020-07-05 14:45:04,023] 
+2/8 * Epoch 2 (_base): lr=1.400e-05 | momentum=0.9000
+2/8 * Epoch 2 (train): accuracy01=0.6695 | f1_score=0.7206 | loss=0.6052 | lr=1.400e-05 | momentum=0.9000
+2/8 * Epoch 2 (valid): accuracy01=0.6574 | f1_score=0.6658 | loss=0.6178
+2/8 * Epoch 2 (test): accuracy01=0.6697 | f1_score=0.6889 | loss=0.6050
+[2020-07-05 14:59:15,808] 
+3/8 * Epoch 3 (_base): lr=1.400e-05 | momentum=0.9000
+3/8 * Epoch 3 (train): accuracy01=0.7405 | f1_score=0.7578 | loss=0.5194 | lr=1.400e-05 | momentum=0.9000
+3/8 * Epoch 3 (valid): accuracy01=0.6702 | f1_score=0.6925 | loss=0.6073
+3/8 * Epoch 3 (test): accuracy01=0.6908 | f1_score=0.7278 | loss=0.5808
+[2020-07-05 15:13:21,248] 
+4/8 * Epoch 4 (_base): lr=1.400e-05 | momentum=0.9000
+4/8 * Epoch 4 (train): accuracy01=0.8353 | f1_score=0.8333 | loss=0.3791 | lr=1.400e-05 | momentum=0.9000
+4/8 * Epoch 4 (valid): accuracy01=0.6843 | f1_score=0.7061 | loss=0.6339
+4/8 * Epoch 4 (test): accuracy01=0.6958 | f1_score=0.7317 | loss=0.6067
+[2020-07-05 15:27:26,111] 
+5/8 * Epoch 5 (_base): lr=1.033e-05 | momentum=0.9067
+5/8 * Epoch 5 (train): accuracy01=0.9158 | f1_score=0.9018 | loss=0.2243 | lr=1.217e-05 | momentum=0.9033
+5/8 * Epoch 5 (valid): accuracy01=0.6763 | f1_score=0.6992 | loss=0.7722
+5/8 * Epoch 5 (test): accuracy01=0.6918 | f1_score=0.7230 | loss=0.7228

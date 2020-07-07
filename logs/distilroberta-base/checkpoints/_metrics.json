@@ -1,0 +1,89 @@
+{
+  "best": {
+    "accuracy01": 0.7018469853577324,
+    "f1_score": 0.7550782966521791,
+    "loss": 1.3036645041056232
+  },
+  "last": {
+    "accuracy01": 0.6904133866518973,
+    "f1_score": 0.730828873754693,
+    "loss": 1.4131833456830178
+  },
+  "train.7": {
+    "accuracy01": 0.7018469853577324,
+    "f1_score": 0.7550782966521791,
+    "loss": 1.3036645041056232
+  },
+  "epoch_0": [
+    "logs/distilroberta-base/checkpoints/train.1.pth",
+    0.5839929823667834,
+    {
+      "accuracy01": 0.5839929823667834,
+      "f1_score": 0.6107962011476232,
+      "loss": 0.6759463146053707
+    }
+  ],
+  "epoch_1": [
+    "logs/distilroberta-base/checkpoints/train.2.pth",
+    0.6613896400286841,
+    {
+      "accuracy01": 0.6613896400286841,
+      "f1_score": 0.7160610767662894,
+      "loss": 0.6105791832023059
+    }
+  ],
+  "epoch_2": [
+    "logs/distilroberta-base/checkpoints/train.3.pth",
+    0.6754617620269354,
+    {
+      "accuracy01": 0.6754617620269354,
+      "f1_score": 0.7213138059531938,
+      "loss": 0.6578912793960923
+    }
+  ],
+  "epoch_3": [
+    "logs/distilroberta-base/checkpoints/train.4.pth",
+    0.6868953580592112,
+    {
+      "accuracy01": 0.6868953580592112,
+      "f1_score": 0.7432664959462709,
+      "loss": 0.8266510562406053
+    }
+  ],
+  "epoch_4": [
+    "logs/distilroberta-base/checkpoints/train.5.pth",
+    0.69569043134951,
+    {
+      "accuracy01": 0.69569043134951,
+      "f1_score": 0.7404300183489347,
+      "loss": 0.9665635569035846
+    }
+  ],
+  "epoch_5": [
+    "logs/distilroberta-base/checkpoints/train.6.pth",
+    0.7005277249303534,
+    {
+      "accuracy01": 0.7005277249303534,
+      "f1_score": 0.7545356812729809,
+      "loss": 1.1095440530250127
+    }
+  ],
+  "epoch_6": [
+    "logs/distilroberta-base/checkpoints/train.7.pth",
+    0.7018469853577324,
+    {
+      "accuracy01": 0.7018469853577324,
+      "f1_score": 0.7550782966521791,
+      "loss": 1.3036645041056232
+    }
+  ],
+  "epoch_7": [
+    "logs/distilroberta-base/checkpoints/train.8.pth",
+    0.6904133866518973,
+    {
+      "accuracy01": 0.6904133866518973,
+      "f1_score": 0.730828873754693,
+      "loss": 1.4131833456830178
+    }
+  ]
+}

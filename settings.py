@@ -36,6 +36,8 @@ GRAD_ACCUM_STEPS = config_kwargs.get('grad_accum_steps', 4)
 
 NUM_EPOCHS = config_kwargs.get('num_epochs', 8)
 
+WARMUP_STEPS = config_kwargs.get('warmup_steps', NUM_EPOCHS // 2)
+
 LOG_DIR = config_kwargs.get('logdir', f'logs/{PRETRAINED_MODEL_NAME}')
 
 
@@ -74,5 +76,7 @@ def update_all(config_path=config_path):
     GRAD_ACCUM_STEPS = config_kwargs.get('grad_accum_steps', 4)
 
     NUM_EPOCHS = config_kwargs.get('num_epochs', 8)
+
+    WARMUP_STEPS = config_kwargs.get('warmup_steps', NUM_EPOCHS // 2)
 
     LOG_DIR = config_kwargs.get('logdir', f'logs/{PRETRAINED_MODEL_NAME}')

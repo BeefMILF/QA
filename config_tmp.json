@@ -2,21 +2,22 @@
  "data_path": "./data",
  "train": "./data/train.jsonl",
  "test": "./data/dev.jsonl",
- "data_clean_flag": false,
+ "data_clean_flag": true,
  "seed": 3,
  "max_q_len": null,
  "max_p_len": null,
  "max_seq_len": 512,
- "pretrained_model_name": "google/bert_uncased_L-4_H-256_A-4",
+ "pretrained_model_name": "distilroberta-base",
  "batch_size": 12,
  "train_sampler_mode": "balanced",
  "num_labels": 2,
- "lr": 1e-05,
+ "lr": 5e-05,
  "lr_range": [
-  1e-05,
-  2e-06
+  5e-05,
+  1e-05
  ],
  "grad_accum_steps": 4,
- "num_epochs": 15,
- "logdir": "logs/google/bert_uncased_L-4_H-256_A-4"
+ "num_epochs": 8,
+ "logdir": "logs/distilroberta-base",
+ "warmup_steps": 2
 }

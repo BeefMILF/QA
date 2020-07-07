@@ -31,10 +31,16 @@ def make_dataset(df, tokenizer, kwargs):
     questions = df.question.values
     answers = df.answer.values.astype(int)
     encoded_pair = encode_data(tokenizer, questions, passages, kwargs)
-    return np.array(encoded_pair['input_ids']),    \
-           np.array(encoded_pair['attention_mask']),\
-           np.array(encoded_pair['token_type_ids']), \
-           answers
+
+    if 'token_type_ids' in encoded_pair:
+        return np.array(encoded_pair['input_ids']),    \
+               np.array(encoded_pair['attention_mask']),\
+               np.array(encoded_pair['token_type_ids']), \
+               answers
+    else:
+        return np.array(encoded_pair['input_ids']),    \
+               np.array(encoded_pair['attention_mask']),\
+               answers
 
 
 def split_features(features, p=0.5, seed=SEED):
@@ -42,8 +48,8 @@ def split_features(features, p=0.5, seed=SEED):
     # for reproducability
     np.random.seed(SEED)
     inds = np.random.choice(2, n, p=[1 - p, p]).astype(bool)
-    features1 = [feature[~inds] for feature in features]
-    features2 = [feature[inds] for feature in features]
+    features1 = [feature[~inds] for feature in features if feature is not None]
+    features2 = [feature[inds] for feature in features if feature is not None]
     return features1, features2, inds
 
 
@@ -56,8 +62,6 @@ def text_prepare(text: str) -> str:
 
 
 def prepare_df(df):
-    df.question = df.question.apply(text_prepare)
+    # df.question = df.question.apply(text_prepare)
     df.passage = df.passage.apply(text_prepare)
     return df
-
-
